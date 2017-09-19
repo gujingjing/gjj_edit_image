@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_button_color"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <!--底部的住菜单功能-->
+    <RelativeLayout
+        android:visibility="visible"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/rg_bottom"
+                android:visibility="visible"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@+id/ll_back"
+                android:gravity="center"
+                android:layout_marginLeft="@dimen/color_left_magging"
+                android:layout_marginRight="@dimen/color_left_magging"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/red_image"
+                        style="@style/color_image"
+                        android:src="@drawable/red_color_bac" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/origin_image"
+                        style="@style/color_image"
+                        android:layout_marginLeft="@dimen/image_padding"
+                        android:src="@drawable/origin_color_bac" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/green_image"
+                        style="@style/color_image"
+                        android:src="@drawable/green_color_bac" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/blue_image"
+                        style="@style/color_image"
+                        android:src="@drawable/blue_color_bac" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/white_image"
+                        style="@style/color_image"
+                        android:src="@drawable/white_color_bac" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/black_image"
+                        style="@style/color_image"
+                        android:src="@drawable/black_color_bac" />
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <!--撤回按钮-->
+            <LinearLayout
+                android:id="@+id/ll_back"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_color_line"
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:background="@color/vertical_line" />
+
+                <cn.hzw.graffiti.edit_image.IconFontRadioButton
+                    android:id="@+id/rd_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@null"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="&#xe65f;"
+                    android:textColor="@color/white"
+                    app:nomalTextSize="20"
+                    app:selectedTextsize="20" />
+            </LinearLayout>
+
+
+        <!--删除按钮-->
+        <cn.hzw.graffiti.edit_image.IconFontRadioButton
+            android:id="@+id/rd_delete"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:button="@null"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="&#xe66a;"
+            android:textColor="@color/white"
+            app:nomalTextSize="20"
+            app:selectedTextsize="20" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/menu_line" />
+</LinearLayout>

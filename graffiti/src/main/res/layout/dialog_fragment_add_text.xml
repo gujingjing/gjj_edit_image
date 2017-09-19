@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--取消、确定-->
+    <include layout="@layout/activity_title"/>
+
+    <!--文字输入-->
+    <EditText
+        android:id="@+id/et_add_text"
+        android:textSize="24sp"
+        android:textColor="@color/red"
+        style="@style/edit_style"
+        android:gravity="left"
+        android:padding="12dp"
+        android:layout_below="@+id/rl_top"
+        android:layout_above="@+id/ll_button_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    //底部按钮
+    <include layout="@layout/menu_edit_image"/>
+
+
+</RelativeLayout>

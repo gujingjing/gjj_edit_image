@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <color name="white">#ffffff</color>
+    <color name="dark_60">#68000000</color>
+    <color name="transparency">#00000000</color>
+    <!--选中图标颜色-->
+    <color name="selected_color">#7089F9</color>
+    <!--menu_line-->
+    <color name="menu_line">#4B4B4B</color>
+    <!--vertical_line-->
+    <color name="vertical_line">#616161</color>
+
+    <!--screen_back_text_color-->
+    <color name="screen_back_text_color">#6F6F6F</color>
+    <!--screen_menu_bg-->
+    <color name="screen_menu_bg">#303030</color>
+
+    <!--colors-->
+    <color name="red">#F21918</color>
+    <color name="orange">#FF9407</color>
+    <color name="green">#63D939</color>
+    <color name="blue">#057BFF</color>
+    <color name="black">#000000</color>
+
+    <color name="back_back">#ABABAB</color>
+
+
+</resources>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_screen"
+    android:visibility="gone"
+    android:background="@color/black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.theartofdev.edmodo.cropper.CropImageView
+        android:id="@+id/cropImageView"
+        android:layout_above="@+id/btn_back"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--底部旋转-->
+    <cn.hzw.graffiti.edit_image.IconFontRadioButton
+        android:id="@+id/btn_back"
+        android:button="@null"
+        android:text="&#xe601;"
+        android:textSize="18sp"
+        android:layout_margin="18dp"
+        android:padding="5dp"
+        android:layout_above="@+id/rl_bottom"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--底部截屏  screen_menu_bg-->
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:background="@color/screen_menu_bg"
+        android:layout_alignParentBottom="true"
+        android:clickable="false"
+        android:focusable="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <cn.hzw.graffiti.edit_image.IconFontRadioButton
+            android:id="@+id/btn_cancel"
+            android:text="&#xe635;"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tv_screen_back"
+            android:text="还原"
+            android:visibility="visible"
+            android:textColor="@color/screen_back_text_color"
+            android:textSize="15sp"
+            android:padding="8dp"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <cn.hzw.graffiti.edit_image.IconFontRadioButton
+            android:id="@+id/btn_ok"
+            android:layout_alignParentRight="true"
+            android:text="&#xe628;"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

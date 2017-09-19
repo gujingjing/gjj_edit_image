@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自定义RadioButton样式-->
+    <declare-styleable name="icon_font_style">
+
+        <attr name="nomalColor" format="color" />
+        <attr name="selectedColor" format="color" />
+        <attr name="nomalTextSize" format="integer" />
+        <attr name="selectedTextsize" format="integer" />
+    </declare-styleable>
+</resources>

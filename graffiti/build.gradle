@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion COMPILE_SDK_VERSION as int
+    buildToolsVersion BUILD_TOOLS_VERSION
+
+    defaultConfig {
+        minSdkVersion MIN_SDK_VERSION as int
+        targetSdkVersion TARGET_SDK_VERSION as int
+        versionCode VERSION_CODE as int
+        versionName VERSION_NAME
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildToolsVersion '25.0.0'
+}
+
+dependencies {
+    compile 'com.forward.androids:androids:1.1.4'
+    //图片裁剪
+    compile 'com.theartofdev.edmodo:android-image-cropper:2.4.7'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+
+}
+
+if (isForUpload2Maven()) {
+    apply from: "https://raw.githubusercontent.com/1993hzw/common/master/bintrayUpload.gradle"
+}

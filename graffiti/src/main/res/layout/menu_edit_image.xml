@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_button_menu"
+    android:layout_alignParentBottom="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dark_60"
+    android:orientation="vertical">
+
+    <include layout="@layout/menu_smale_list"/>
+
+
+    <!--底部的住菜单功能-->
+    <LinearLayout
+        android:id="@+id/rg_bottom_group"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:weightSum="4"
+        android:layout_height="50dp">
+        <cn.hzw.graffiti.edit_image.IconFontRadioButton
+            android:id="@+id/rd_write"
+            android:text="&#xe638;"
+            style="@style/radio_style"/>
+
+        <cn.hzw.graffiti.edit_image.IconFontRadioButton
+            android:id="@+id/rd_text"
+            android:text="&#xe63a;"
+            style="@style/radio_style" />
+        <cn.hzw.graffiti.edit_image.IconFontRadioButton
+            android:id="@+id/rd_mosaic"
+            android:text="&#xe63c;"
+            style="@style/radio_style"/>
+        <cn.hzw.graffiti.edit_image.IconFontRadioButton
+            android:id="@+id/rd_screen"
+            android:text="&#xe63d;"
+            style="@style/radio_style"/>
+    </LinearLayout>
+
+</LinearLayout>
