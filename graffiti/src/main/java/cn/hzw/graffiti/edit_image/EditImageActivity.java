@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.PersistableBundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -795,6 +796,7 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
         int color = (int) map.get(AppParmers.TEXT_COLOR);
         String content = (String) map.get(AppParmers.TEXT_CONTENT);
 
+        Log.e("text-","text-start===x==="+x+"===y==="+y+"===content==="+content);
         if (TextUtils.isEmpty(content)) {
             return;
         }
@@ -806,10 +808,13 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
 //            mGraffitiView.addSelectableItem(new GraffitiText(mGraffitiView.getPen(), content, mGraffitiView.getPaintSize(), mGraffitiView.getColor().copy(),
 //                    0, mGraffitiView.getGraffitiRotateDegree(), x, y, mGraffitiView.getOriginalPivotX()/2, mGraffitiView.getOriginalPivotY()));
 
+            Log.e("text-","text-null===x==="+x+"===y==="+y+"===content==="+content);
             mGraffitiView.addSelectableItem(new GraffitiText(mGraffitiView.getPen(), content, mGraffitiView.getPaintSize(), mGraffitiView.getColor().copy(),
                     0, mGraffitiView.getGraffitiRotateDegree(), x, y, mGraffitiView.getOriginalPivotX(), mGraffitiView.getOriginalPivotY()));
 
+
         } else {
+            Log.e("text-","text-noNull===x==="+x+"===y==="+y+"===content==="+content);
             currentTextGraffitiText.setText(content);
         }
         mGraffitiView.invalidate();

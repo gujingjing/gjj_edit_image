@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,6 +22,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.forward.androids.utils.LogUtil;
 import cn.hzw.graffiti.R;
 
 
@@ -222,6 +224,8 @@ public class AddTextDialogFragment extends DialogFragment implements View.OnClic
                 }
                 map.put(AppParmers.TEXT_CONTENT, commentEditText.getText().toString());
                 map.put(AppParmers.TEXT_COLOR, color);
+
+                Log.e("text-","-start===x==="+commentEditText.getText().toString());
 
                 dataCallback.setCommentText(map);
             }
