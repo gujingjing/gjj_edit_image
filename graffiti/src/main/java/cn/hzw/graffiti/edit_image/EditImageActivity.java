@@ -338,8 +338,13 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
                         mPaintSizeView.setText("" + mPaintSizeBar.getProgress());
 
                         //初始化默认值    模拟点击-手绘
-                        rd_write.performClick();
-                        red_image.performClick();
+//                        rd_write.performClick();
+//                        red_image.performClick();
+
+                        mIsMovingPic = true;
+                        ll_button_color.setVisibility(View.GONE);
+
+
                     }
 
                     @Override
@@ -411,6 +416,7 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
         commentDialogFragment.show(getFragmentManager(), "CommentDialogFragment");
 
         ll_button_color.setVisibility(View.GONE);
+
     }
 
     /**
@@ -777,8 +783,14 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
     @Override
     public void setCommentText(Map<String, Object> map) {
 
+//        float x = (float) map.get(AppParmers.X_POSITIONX);
+//        float y = (float) map.get(AppParmers.Y_POSITION);
+
+
         float x = (float) map.get(AppParmers.X_POSITIONX);
         float y = (float) map.get(AppParmers.Y_POSITION);
+
+
 
         int color = (int) map.get(AppParmers.TEXT_COLOR);
         String content = (String) map.get(AppParmers.TEXT_CONTENT);
@@ -791,11 +803,11 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
 
 
         if (currentTextGraffitiText == null) {
-            mGraffitiView.addSelectableItem(new GraffitiText(mGraffitiView.getPen(), content, mGraffitiView.getPaintSize(), mGraffitiView.getColor().copy(),
-                    0, mGraffitiView.getGraffitiRotateDegree(), x, y, mGraffitiView.getOriginalPivotX()/2, mGraffitiView.getOriginalPivotY()));
-
 //            mGraffitiView.addSelectableItem(new GraffitiText(mGraffitiView.getPen(), content, mGraffitiView.getPaintSize(), mGraffitiView.getColor().copy(),
-//                    0, mGraffitiView.getGraffitiRotateDegree(), x, y, mGraffitiView.getOriginalPivotX(), mGraffitiView.getOriginalPivotY()));
+//                    0, mGraffitiView.getGraffitiRotateDegree(), x, y, mGraffitiView.getOriginalPivotX()/2, mGraffitiView.getOriginalPivotY()));
+
+            mGraffitiView.addSelectableItem(new GraffitiText(mGraffitiView.getPen(), content, mGraffitiView.getPaintSize(), mGraffitiView.getColor().copy(),
+                    0, mGraffitiView.getGraffitiRotateDegree(), x, y, mGraffitiView.getOriginalPivotX(), mGraffitiView.getOriginalPivotY()));
 
         } else {
             currentTextGraffitiText.setText(content);
@@ -929,8 +941,10 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
                 mShapeModeContainer.setVisibility(View.GONE);
                 mGraffitiView.setPen(GraffitiView.Pen.TEXT);
 
+
                 //默认在开头中间
-                createGraffitiText(null, screenWidth / 2, screenHeight / 2);
+//                createGraffitiText(null, screenWidth / 2, screenHeight / 2);
+                createGraffitiText(null, -1, -1);
 
                 setButtonMenuShow(v, isselfe, true, mGraffitiView.getPen());
 
@@ -1390,6 +1404,9 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
             rg_bottom.setVisibility(View.GONE);
 
             afterClick(view, isSelfe, show);
+
+//            ll_button_color.setVisibility(View.GONE);
+
             viewClickShow(pen);
         } else if (pen == GraffitiView.Pen.SCREEN) {//截屏
 
@@ -1412,18 +1429,19 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
      * 点击之后的设置
      */
     public void afterClick(View view, boolean isSelfe, boolean show) {
+        boolean oldLLAtate=ll_button_color.getVisibility()==View.VISIBLE;
         if (isSelfe) {
-            ll_button_color.setVisibility(ll_button_color.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE);
+            ll_button_color.setVisibility(oldLLAtate  ? View.GONE : View.VISIBLE);
         } else {
             ll_button_color.setVisibility(show ? View.VISIBLE : View.GONE);
         }
-        mIsMovingPic = !(ll_button_color.getVisibility() == View.VISIBLE);
+        boolean newLLAtate=ll_button_color.getVisibility()==View.VISIBLE;
+        mIsMovingPic = !newLLAtate;
 
         try {
-            boolean viewState = ll_button_color.getVisibility() == View.VISIBLE;
-            LogUtil.e("state-viewState===" + viewState);
-            ((IconFontRadioButton) view).setChecked(viewState);
-            view.setSelected(viewState);
+            LogUtil.e("state-viewState===" + newLLAtate);
+            ((IconFontRadioButton) view).setChecked(newLLAtate);
+            view.setSelected(newLLAtate);
         } catch (Exception e) {
             e.printStackTrace();
         }

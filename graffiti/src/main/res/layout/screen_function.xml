@@ -17,7 +17,7 @@
     <cn.hzw.graffiti.edit_image.IconFontRadioButton
         android:id="@+id/btn_back"
         android:button="@null"
-        android:text="&#xe601;"
+        android:text="&#xe669;"
         android:textSize="18sp"
         android:layout_margin="18dp"
         android:padding="5dp"
@@ -71,6 +71,7 @@
             android:paddingRight="10dp"
             android:paddingTop="15dp"
             android:paddingBottom="15dp"
+            android:clickable="true"
             android:layout_centerVertical="true"
             android:button="@null"
             android:textColor="@color/white"

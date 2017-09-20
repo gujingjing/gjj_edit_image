@@ -3,30 +3,30 @@
 
     <item
         is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.3.1/jars/classes.jar"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-25.3.1_104c4ce80e1ae486186a6bb55f730e1667c91a8e.jar" />
+        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-25.3.1_f8ab1a49392f9384b205cfd66f5669bb2b76fd4e.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.3.1/jars/classes.jar"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-25.3.1_d29c4d8a5173e09b4ef39e2e3ffc475fa1704330.jar" />
+        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-25.3.1_457e5b91498ffeb7fb990476b148bddf29ca67f7.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.3.1/jars/classes.jar"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-25.3.1_87700d9ee35820f353e332f6343dd366898240e0.jar" />
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-25.3.1_c097fcb8c3129d587b9bd9ed404ef7f8666bc06e.jar" />
     </item>
     <item
         is-multidex="false"
@@ -39,30 +39,30 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/com.theartofdev.edmodo/android-image-cropper/2.4.7/jars/classes.jar"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/gjj_edit_image/graffiti/unspecified/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="4a88eaa7f9a31907def9a7968367475bdf5170be">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/com.theartofdev.edmodo-android-image-cropper-2.4.7_f9def7fa952a5286e1501d9f6843c86b7adb1903.jar" />
+        sha1="468f029600d287f74f9d0e9a4de8244eec068113">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/gjj_edit_image-graffiti-unspecified_cfa90bad4559476744148c6797da1c6e77eac60e.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.3.1/jars/classes.jar"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/exifinterface/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="6ef31f1555bb4cc513ec8d52711365a8b89f3600">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-25.3.1_c71e12e5fa3e6366302e085807070243f8a7342d.jar" />
+        sha1="6bd32b72098fecf44dcab3808a11e6b9fcb86b7b">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.android.support-exifinterface-25.3.1_a0058a6020712409adbe0b7ee47a658fbd6b36b5.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/cn.hzw.imageselector/library/1.0/jars/classes.jar"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/cn.hzw.imageselector/library/1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="39c79d6e02371d533502fb293682b3b27da1db0b">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/cn.hzw.imageselector-library-1.0_81d61060d08d6ddc246215f147030a6dd5290d16.jar" />
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/cn.hzw.imageselector-library-1.0_00f9e10aae4784bd8a10e54c779ac7c1ec7bca8c.jar" />
     </item>
     <item
         is-multidex="false"
@@ -75,30 +75,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.3.1/jars/classes.jar"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.3.1_5e5bf8dd73a380c4da12ddeebfdd402a6eda400b.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.3.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-25.3.1_30f1017e558288051c0b5b3364eebd55ddcbc777.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/com.android.support/exifinterface/25.3.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="6bd32b72098fecf44dcab3808a11e6b9fcb86b7b">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/com.android.support-exifinterface-25.3.1_7dd19ae38b21aabf71b71fc73726221c2724e13c.jar" />
+        sha1="150252b33b00274cc868578ade018fda0d43a3eb">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-25.3.1_8ca43ecb78d03cd74f981c20ba47db33edaac63e.jar" />
     </item>
     <item
         is-multidex="false"
@@ -147,15 +129,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.3.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-25.3.1_3432890baddb328facf8a4b9a79ac21059b9a243.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -183,21 +156,39 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.3.1/jars/classes.jar"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-25.3.1_4371f358d1fa3691cfdb47b3302ba3b20bbf2a21.jar" />
+        sha1="47635644d0d5c103c1dd8360549eb9ba3225c7d3">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.3.1_8738773035510a6cce8f522ff5fffdb328993414.jar" />
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/com.forward.androids/androids/1.1.4/jars/classes.jar"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="95f40797c6af90dcbd4a404744816e84b6f67fa9">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/com.forward.androids-androids-1.1.4_b9ea376eb2792e5a71c1c00103a1f526781e7c4e.jar" />
+        sha1="052f5f840f21174a3ecf6544130194e2652cbb73">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-25.3.1_9ae4c48b3fb907c0e34055c28ce5f5d7c247d8a8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="da27a32db6af8954ee8061537c7d476fcb1df46f">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-25.3.1_46c5b636892b78008c8f181a3ad396c3ef4b55c2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/jingjinggu/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/support-annotations-25.3.1_5cd3efda831322f4f4769f81d26d15900e869681.jar" />
     </item>
     <item
         is-multidex="false"
@@ -210,21 +201,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jingjinggu/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.3.1/support-annotations-25.3.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="bf8841d29fa39e077730e7a91222c2ce269fa7c9">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/support-annotations-25.3.1_5cd3efda831322f4f4769f81d26d15900e869681.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
         sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
         <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-25.3.1_34e56dd7bb6bb3ebdbc4a0a75ef3cb130a75bedd.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.3.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a26a1154d053ab11aaf4c3967c42a4d66390991">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-25.3.1_9839499e16f90e73bff937a321e9cfc3028b9aac.jar" />
     </item>
     <item
         is-multidex="false"
@@ -237,6 +228,24 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.theartofdev.edmodo/android-image-cropper/2.4.7/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="4a88eaa7f9a31907def9a7968367475bdf5170be">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.theartofdev.edmodo-android-image-cropper-2.4.7_f377983bbfec3255da13de04bf670f003c8480af.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.forward.androids/androids/1.1.4/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="95f40797c6af90dcbd4a404744816e84b6f67fa9">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.forward.androids-androids-1.1.4_7b2cd308441363b51070bf7debc54384955f9644.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -246,21 +255,12 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/edit_image2/graffiti/unspecified/jars/classes.jar"
+        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.3.1/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.2"
-        sha1="f638c924313fb6f2a6c85f6a41d9079088948203">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/edit_image2-graffiti-unspecified_fbd6f96c3224340d0d1d0e954ee6b35c826f851d.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.3.1/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="45f697922e6f072daa12f8a2995dc77ab03c11da">
-        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/edit_image2/app/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-25.3.1_340905b1aad94182b9caaf5c266bca89fec61986.jar" />
+        sha1="efb8cb62d47d157c29d1521daac7eefd4cb881ee">
+        <dex dex="/Users/jingjinggu/develope/android/project/gjj_git/gjj_edit_image/gjj_edit_image/gjj_edit_image/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-25.3.1_d0763ac556f96d2eb57a32559adfc95e969c79cc.jar" />
     </item>
 
 </items>

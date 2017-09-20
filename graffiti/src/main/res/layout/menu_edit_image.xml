@@ -4,7 +4,7 @@
     android:layout_alignParentBottom="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/dark_60"
+    android:background="@drawable/shadow_back_bottom"
     android:orientation="vertical">
 
     <include layout="@layout/menu_smale_list"/>

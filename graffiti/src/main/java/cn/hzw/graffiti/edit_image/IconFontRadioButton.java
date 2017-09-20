@@ -45,7 +45,7 @@ public class IconFontRadioButton extends RadioButton {
         nomalTextSize = a.getInt(R.styleable.icon_font_style_nomalTextSize, 18);
         selectedTextSize = a.getInt(R.styleable.icon_font_style_selectedTextsize, 18);
 
-//        this.setTextColor(nomalColor);
+        this.setTextColor(context.getResources().getColor(R.color.white));
         this.setTextSize(TypedValue.COMPLEX_UNIT_SP,nomalTextSize);
 
         this.setOnCheckedChangeListener(new OnCheckedChangeListener() {
