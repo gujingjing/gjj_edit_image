@@ -342,7 +342,7 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
 //                        red_image.performClick();
 
                         mIsMovingPic = true;
-                        ll_button_color.setVisibility(View.GONE);
+                        ll_button_color.setVisibility(View.INVISIBLE);
 
 
                     }
@@ -880,6 +880,9 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
                 cropImageView.rotateImage(90);
             } else if (v.getId() == R.id.btn_cancel) {//取消
                 rl_screen.setVisibility(View.GONE);
+                //取消刚刚绘制的
+                mGraffitiView.undoText();
+
             } else if (v.getId() == R.id.btn_ok) {//确定
 //                cropImageView.getCroppedImageAsync();
                 //设置为滑动模式
@@ -887,6 +890,7 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
                 mIsMovingPic = true;
 
                 Bitmap cropped = cropImageView.getCroppedImage();
+
                 if (cropped!= null) {
                     mGraffitiView.resetBitmap(cropped);
 
@@ -962,7 +966,33 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
 
                 rl_screen.setVisibility(View.VISIBLE);
                 //设置截屏图片
-                cropImageView.setImageBitmap(mGraffitiView.getCurrentScreenBitmap());
+
+                mGraffitiView.save(new GraffitiListener() {
+                    @Override
+                    public void onSaved(Bitmap bitmap, Bitmap bitmapEraser) {
+                        cropImageView.setImageBitmap(bitmap);
+                    }
+
+                    @Override
+                    public void onError(int i, String msg) {
+
+                    }
+
+                    @Override
+                    public void onReady() {
+
+                    }
+
+                    @Override
+                    public void onSelectedItem(GraffitiSelectableItem selectableItem, boolean selected) {
+
+                    }
+
+                    @Override
+                    public void onCreateSelectableItem(GraffitiView.Pen pen, float x, float y) {
+
+                    }
+                });
 
                 //设置为滑动模式
                 mIsMovingPic = true;

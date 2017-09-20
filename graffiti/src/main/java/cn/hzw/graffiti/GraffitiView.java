@@ -163,7 +163,7 @@ public class GraffitiView extends View {
         if (Build.VERSION.SDK_INT >= 11) {
             setLayerType(LAYER_TYPE_SOFTWARE, null);
         }
-        mosaicBitmap= BitmapFactory.decodeResource(this.getResources(),R.drawable.mosac);
+        mosaicBitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.mosac);
 
         mBitmap = bitmap;
         mGraffitiListener = listener;
@@ -372,8 +372,8 @@ public class GraffitiView extends View {
                         }
 
                         //设置字体的大小-可拖动缩放
-                        if(mIsRotatingSelectedItem&&mSelectedItem!=null){
-                            setSelectedItemSize(mSelectedItem.getSize()+(mTouchX-mLastTouchX));
+                        if (mIsRotatingSelectedItem && mSelectedItem != null) {
+                            setSelectedItemSize(mSelectedItem.getSize() + (mTouchX - mLastTouchX));
                         }
 
                     } else {
@@ -386,7 +386,7 @@ public class GraffitiView extends View {
                                         mCopyLocation.getCopyStartY() + toY(mTouchY) - mCopyLocation.getTouchStartY());
                             }
                             if (mShape == Shape.HAND_WRITE) { // 手写
-                                if(mCurrPath!=null){
+                                if (mCurrPath != null) {
                                     mCurrPath.quadTo(
                                             toX(mLastTouchX),
                                             toY(mLastTouchY),
@@ -478,7 +478,7 @@ public class GraffitiView extends View {
 
         //马赛克
 //        mBitmapShaderMosaic=new BitmapShader(MosaicUtil.getMosaicsBitmaps(mBitmap), Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-        mBitmapShaderMosaic=new BitmapShader(PixelateUtil.pixelate(mBitmap,DensityUtil.dip2px(this.getContext(), 30f)), Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+        mBitmapShaderMosaic = new BitmapShader(PixelateUtil.pixelate(mBitmap, DensityUtil.dip2px(this.getContext(), 30f)), Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 //        mBitmapShaderMosaic=new BitmapShader(MosaicUtil.getMosaic(mBitmap), Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 
         int w = mBitmap.getWidth();
@@ -949,11 +949,46 @@ public class GraffitiView extends View {
         mGraffitiListener.onSaved(mGraffitiBitmap, mBitmapEraser);
     }
     /**
+     * 取消文字的绘制
+     */
+    public void undoText(){
+        for (GraffitiSelectableItem item : mSelectableStack) {
+            undo();
+        }
+    }
+    /**
+     * 保存
+     */
+    public void save(GraffitiListener mGraffitiListener) {
+
+        mSelectedItem = null;
+
+        // 保存的时候，把文字画上去
+        for (GraffitiSelectableItem item : mSelectableStack) {
+            draw(mBitmapCanvas, item);
+        }
+        if (mGraffitiListener != null) {
+
+            mGraffitiListener.onSaved(mGraffitiBitmap, mBitmapEraser);
+        } else {
+            this.mGraffitiListener.onSaved(mGraffitiBitmap, mBitmapEraser);
+        }
+    }
+
+    /**
      * 获取当前屏幕上的bitmap
      */
-    public Bitmap getCurrentScreenBitmap(){
-        return mGraffitiBitmap;
+    public Bitmap getCurrentScreenBitmap() {
+        Canvas canvas = new Canvas();
+        Bitmap newBitMap = mGraffitiBitmap;
+        canvas.drawBitmap(newBitMap, 0, 0, null);
+        for (GraffitiSelectableItem item : mSelectableStack) {
+            draw(canvas, item);
+        }
+
+        return newBitMap;
     }
+
     /**
      * 清屏
      */
@@ -1277,7 +1312,7 @@ public class GraffitiView extends View {
     /**
      * 重新设置地图
      */
-    public void resetBitmap(Bitmap bitmap){
+    public void resetBitmap(Bitmap bitmap) {
         mBitmap = bitmap;
         if (mGraffitiListener == null) {
             throw new RuntimeException("GraffitiListener is null!!!");
