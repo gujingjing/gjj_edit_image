@@ -2,7 +2,7 @@ package cn.hzw.graffiti.edit_image;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -10,8 +10,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.PersistableBundle;
+import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -19,22 +20,16 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.theartofdev.edmodo.cropper.CropImageView;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.forward.androids.utils.ImageUtils;
 import cn.forward.androids.utils.LogUtil;
@@ -53,13 +48,12 @@ import cn.hzw.graffiti.GraffitiView;
 import cn.hzw.graffiti.R;
 import cn.hzw.graffiti.imagepicker.ImageSelectorView;
 
-
 /**
  * 涂鸦界面，根据GraffitiView的接口，提供页面交互
  * （这边代码和ui比较粗糙，主要目的是告诉大家GraffitiView的接口具体能实现什么功能，实际需求中的ui和交互需另提别论）
  * Created by huangziwei(154330138@qq.com) on 2016/9/3.
  */
-public class EditImageActivity extends Activity implements DialogFragmentDataCallback, CropImageView.OnCropImageCompleteListener {
+public class EditImageCopy extends Activity {
 
     public static final String TAG = "Graffiti";
 
@@ -82,7 +76,7 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
         params.mAmplifierScale = 0f;//不使用放大镜
         params.mSavePath = outputPath;//图片保存目录
 
-        Intent intent = new Intent(activity, EditImageActivity.class);
+        Intent intent = new Intent(activity, EditImageCopy.class);
         intent.putExtra(EditImageActivity.KEY_PARAMS, params);
         intent.putExtra(AppParmers.EDIT_ISSHOWBTN, isShowBtn);
         intent.putExtra(AppParmers.EDIT_FROM_DATA, data);
@@ -91,7 +85,6 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
 
 
     }
-
     /**
      * 启动涂鸦界面
      *
@@ -101,8 +94,8 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
      * @see GraffitiParams
      */
     public static void startActivityForResult(Activity activity, GraffitiParams params, int requestCode) {
-        Intent intent = new Intent(activity, EditImageActivity.class);
-        intent.putExtra(EditImageActivity.KEY_PARAMS, params);
+        Intent intent = new Intent(activity, EditImageCopy.class);
+        intent.putExtra(EditImageCopy.KEY_PARAMS, params);
         activity.startActivityForResult(intent, requestCode);
     }
 
@@ -125,7 +118,7 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
     }
 
     /**
-     * {@link EditImageActivity#startActivityForResult(Activity, String, String, boolean, int)}
+     * {@link EditImageCopy#startActivityForResult(Activity, String, String, boolean, int)}
      */
     @Deprecated
     public static void startActivityForResult(Activity activity, String imagePath, int requestCode) {
@@ -133,7 +126,6 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
         params.mImagePath = imagePath;
         startActivityForResult(activity, params, requestCode);
     }
-
 
     public static final String KEY_PARAMS = "key_graffiti_params";
     public static final String KEY_IMAGE_PATH = "key_image_path";
@@ -144,9 +136,9 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
     private FrameLayout mFrameLayout;
     private GraffitiView mGraffitiView;
 
-    private View.OnClickListener mOnClickListener, mColorOnclickListener, mMenuOnClickListener, mScreenOnclickListener;
+    private View.OnClickListener mOnClickListener;
 
-    private SeekBar mPaintSizeBar;//调节画笔大小
+    private SeekBar mPaintSizeBar;
     private TextView mPaintSizeView;
 
     private View mBtnColor;
@@ -168,7 +160,7 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
     private final int TIME_SPAN = 40;
     private View mBtnMovePic, mBtnHidePanel, mSettingsPanel;
     private View mShapeModeContainer;
-    private View mSelectedTextEditContainer;//文字编辑菜单
+    private View mSelectedTextEditContainer;
     private View mEditContainer;
 
     private int mTouchSlop;
@@ -188,35 +180,6 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
 
 //    private float mSelectableItemSize;
 
-    //屏幕宽高
-    private int screenWidth;
-    private int screenHeight;
-
-    //自定义添加的view
-    private IconFontRadioButton rd_write, rd_text, rd_mosaic, rd_screen, rd_back, rd_delete;
-    //点击文字，记录
-    private GraffitiText currentTextGraffitiText;
-    //涂鸦画笔默认大小
-    private float drawPaintSize = 13f;
-    //文字默认大小
-    private int textPaintSize;
-    //马赛克大小
-    private int mosicaPaintSize;
-
-    //底部菜单  颜色菜单   颜色合集   撤销按钮
-    private LinearLayout ll_button_menu, ll_button_color, rg_bottom, ll_back;
-    //顶部取消、确认
-    private RelativeLayout rl_top,rl_bottom;
-    private TextView tv_ensure, tv_cancel, tv_color_line;
-    private ImageView red_image, origin_image, green_image, blue_image, white_image, black_image;
-    private LinearLayout rg_bottom_group;
-    private CropImageView cropImageView;
-    private IconFontRadioButton btn_back, btn_cancel, btn_ok;
-    private TextView tv_screen_back;
-    private RelativeLayout rl_screen;
-
-    //截屏需要的
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -233,9 +196,6 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBarUtil.setStatusBarTranslucent(this, true, false);
-
-        Log.e("text-","text-oncreate");
-
         if (mGraffitiParams == null) {
             mGraffitiParams = getIntent().getExtras().getParcelable(KEY_PARAMS);
         }
@@ -244,13 +204,6 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
             this.finish();
             return;
         }
-        WindowManager wm = (WindowManager) this
-                .getSystemService(Context.WINDOW_SERVICE);
-        screenWidth = wm.getDefaultDisplay().getWidth();
-        screenHeight = wm.getDefaultDisplay().getHeight();
-
-        textPaintSize = DensityUtil.dip2px(this, 30f);
-        mosicaPaintSize = DensityUtil.dip2px(this, 60f);
 
         mImagePath = mGraffitiParams.mImagePath;
         if (mImagePath == null) {
@@ -272,7 +225,7 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
             return;
         }
 
-        setContentView(R.layout.layout_graffiti_copy);
+        setContentView(R.layout.layout_graffiti);
         mFrameLayout = (FrameLayout) findViewById(R.id.graffiti_container);
 
         // /storage/emulated/0/DCIM/Graffiti/1479369280029.jpg
@@ -283,7 +236,6 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
                         if (bitmapEraser != null) {
                             bitmapEraser.recycle(); // 回收图片，不再涂鸦，避免内存溢出
                         }
-
                         File graffitiFile = null;
                         File file = null;
                         String savePath = mGraffitiParams.mSavePath;
@@ -310,7 +262,7 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
                             outputStream = new FileOutputStream(file);
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 95, outputStream);
                             ImageUtils.addImage(getContentResolver(), file.getAbsolutePath());
-                            Intent intent = getIntent();
+                            Intent intent = new Intent();
                             intent.putExtra(KEY_IMAGE_PATH, file.getAbsolutePath());
                             setResult(Activity.RESULT_OK, intent);
                             finish();
@@ -329,7 +281,7 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
 
                     @Override
                     public void onError(int i, String msg) {
-                        setResult(RESULT_ERROR, getIntent());
+                        setResult(RESULT_ERROR);
                         finish();
                     }
 
@@ -340,42 +292,29 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
                         mPaintSizeBar.setProgress((int) (mGraffitiView.getPaintSize() + 0.5f));
                         mPaintSizeBar.setMax((int) (Math.min(mGraffitiView.getBitmapWidthOnView(), mGraffitiView.getBitmapHeightOnView()) / 3 * DrawUtil.GRAFFITI_PIXEL_UNIT));
                         mPaintSizeView.setText("" + mPaintSizeBar.getProgress());
-
-                        //初始化默认值    模拟点击-手绘
-//                        rd_write.performClick();
-//                        red_image.performClick();
-
-                        mIsMovingPic = true;
-                        ll_button_color.setVisibility(View.INVISIBLE);
-
-
+                        findViewById(R.id.btn_pen_hand).performClick();
+                        findViewById(R.id.btn_hand_write).performClick();
                     }
 
                     @Override
                     public void onSelectedItem(GraffitiSelectableItem selectableItem, boolean selected) {
                         if (selected) {
-
-                            //文字显示
-                            if (GraffitiView.Pen.TEXT == mGraffitiView.getPen()) {
-                                setButtonMenuShow(null, false, true, mGraffitiView.getPen());
+                            mSelectedTextEditContainer.setVisibility(View.VISIBLE);
+                            if (mGraffitiView.getSelectedItemColor().getType() == GraffitiColor.Type.BITMAP) {
+                                mBtnColor.setBackgroundDrawable(new BitmapDrawable(mGraffitiView.getSelectedItemColor().getBitmap()));
+                            } else {
+                                mBtnColor.setBackgroundColor(mGraffitiView.getSelectedItemColor().getColor());
                             }
-//                            if (mGraffitiView.getSelectedItemColor().getType() == GraffitiColor.Type.BITMAP) {
-//                                mBtnColor.setBackgroundDrawable(new BitmapDrawable(mGraffitiView.getSelectedItemColor().getBitmap()));
-//                            } else {
-//                                mBtnColor.setBackgroundColor(mGraffitiView.getSelectedItemColor().getColor());
-//                            }
                             mPaintSizeBar.setProgress((int) (mGraffitiView.getSelectedItemSize() + 0.5f));
                         } else {
-                            //隐藏文字
-                            if (GraffitiView.Pen.TEXT == mGraffitiView.getPen()) {
-                                setButtonMenuShow(null, false, false, mGraffitiView.getPen());
+                            mSelectedTextEditContainer.setVisibility(View.GONE);
+                            mEditContainer.setVisibility(View.VISIBLE);
+                            if (mGraffitiView.getColor().getType() == GraffitiColor.Type.BITMAP) {
+                                mBtnColor.setBackgroundDrawable(new BitmapDrawable(mGraffitiView.getColor().getBitmap()));
+                            } else {
+                                mBtnColor.setBackgroundColor(mGraffitiView.getColor().getColor());
                             }
-//                            if (mGraffitiView.getColor().getType() == GraffitiColor.Type.BITMAP) {
-//                                mBtnColor.setBackgroundDrawable(new BitmapDrawable(mGraffitiView.getColor().getBitmap()));
-//                            } else {
-//                                mBtnColor.setBackgroundColor(mGraffitiView.getColor().getColor());
-//                            }
-//
+
                             mPaintSizeBar.setProgress((int) (mGraffitiView.getPaintSize() + 0.5f));
                         }
                     }
@@ -390,42 +329,108 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
                     }
                 });
         mGraffitiView.setIsDrawableOutside(mGraffitiParams.mIsDrawableOutside);
-
-        //将图片编辑view加入fragment
         mFrameLayout.addView(mGraffitiView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
         mOnClickListener = new GraffitiOnClickListener();
-        mColorOnclickListener = new ColorOnCLickListener();
-        mMenuOnClickListener = new MenuOnClickListener();
-        mScreenOnclickListener = new ScreenClickListener();
-
         mTouchSlop = ViewConfiguration.get(getApplicationContext()).getScaledTouchSlop();
         initView();
     }
 
-    /**
-     * 添加文字
-     */
     private void createGraffitiText(final GraffitiText graffitiText, final float x, final float y) {
+        Activity activity = this;
 
-        currentTextGraffitiText = graffitiText;
+        boolean fullScreen = (activity.getWindow().getAttributes().flags & WindowManager.LayoutParams.FLAG_FULLSCREEN) != 0;
+        Dialog dialog = null;
+        if (fullScreen) {
+            dialog = new Dialog(activity,
+                    android.R.style.Theme_Translucent_NoTitleBar_Fullscreen);
+        } else {
+            dialog = new Dialog(activity,
+                    android.R.style.Theme_Translucent_NoTitleBar);
+        }
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        dialog.show();
 
-        Map<String, Object> map = new HashMap<>();
-        map.put(AppParmers.X_POSITIONX, x);
-        map.put(AppParmers.Y_POSITION, y);
-        map.put(AppParmers.TEXT_CONTENT, graffitiText == null ? "" : graffitiText.getText());
-        map.put(AppParmers.TEXT_COLOR, mGraffitiView.getGraffitiColor().getColor());
+        ViewGroup container = (ViewGroup) View.inflate(getApplicationContext(), R.layout.graffiti_create_text, null);
+        final Dialog finalDialog = dialog;
+        container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalDialog.dismiss();
+            }
+        });
+        dialog.setContentView(container);
 
-        AddTextDialogFragment commentDialogFragment = AddTextDialogFragment.newInstance(map);
-        commentDialogFragment.show(getFragmentManager(), "CommentDialogFragment");
+        final EditText textView = (EditText) container.findViewById(R.id.graffiti_selectable_edit);
+        final View cancelBtn = container.findViewById(R.id.graffiti_text_cancel_btn);
+        final TextView enterBtn = (TextView) container.findViewById(R.id.graffiti_text_enter_btn);
 
-        ll_button_color.setVisibility(View.GONE);
+        textView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String text = (textView.getText() + "").trim();
+                if (TextUtils.isEmpty(text)) {
+                    enterBtn.setEnabled(false);
+                    enterBtn.setTextColor(0xffb3b3b3);
+                } else {
+                    enterBtn.setEnabled(true);
+                    enterBtn.setTextColor(0xff232323);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        textView.setText(graffitiText == null ? "" : graffitiText.getText());
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelBtn.setSelected(true);
+                finalDialog.dismiss();
+            }
+        });
+
+        enterBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalDialog.dismiss();
+            }
+        });
+
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (cancelBtn.isSelected()) {
+                    mSettingsPanel.removeCallbacks(mHideDelayRunnable);
+                    return;
+                }
+                String text = (textView.getText() + "").trim();
+                if (TextUtils.isEmpty(text)) {
+                    return;
+                }
+                if (graffitiText == null) {
+                    mGraffitiView.addSelectableItem(new GraffitiText(mGraffitiView.getPen(), text, mGraffitiView.getPaintSize(), mGraffitiView.getColor().copy(),
+                            0, mGraffitiView.getGraffitiRotateDegree(), x, y, mGraffitiView.getOriginalPivotX(), mGraffitiView.getOriginalPivotY()));
+                } else {
+                    graffitiText.setText(text);
+                }
+                mGraffitiView.invalidate();
+            }
+        });
+
+        if (graffitiText == null) {
+            mSettingsPanel.removeCallbacks(mHideDelayRunnable);
+        }
 
     }
 
-    /**
-     * 添加图片
-     */
     private void createGraffitiBitmap(final GraffitiBitmap graffitiBitmap, final float x, final float y) {
         Activity activity = this;
 
@@ -475,94 +480,6 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
     }
 
     private void initView() {
-        //自定义添加的view
-        rd_write = (IconFontRadioButton) findViewById(R.id.rd_write);
-        rd_text = (IconFontRadioButton) findViewById(R.id.rd_text);
-        rd_mosaic = (IconFontRadioButton) findViewById(R.id.rd_mosaic);
-        rd_screen = (IconFontRadioButton) findViewById(R.id.rd_screen);
-        rd_back = (IconFontRadioButton) findViewById(R.id.rd_back);
-        //底部菜单-整体
-        ll_button_menu = (LinearLayout) findViewById(R.id.ll_button_menu);
-        //颜色菜单
-        ll_button_color = (LinearLayout) findViewById(R.id.ll_button_color);
-        //撤销按钮
-        ll_back = (LinearLayout) findViewById(R.id.ll_back);
-        //颜色按钮集合
-        rg_bottom = (LinearLayout) findViewById(R.id.rg_bottom);
-        //颜色和撤销之间的线
-        tv_color_line = (TextView) findViewById(R.id.tv_color_line);
-        //删除
-        rd_delete = (IconFontRadioButton) findViewById(R.id.rd_delete);
-        //rg_bottom_group
-        rg_bottom_group = (LinearLayout) findViewById(R.id.rg_bottom_group);
-
-
-        //顶部取消，确定
-        rl_top = (RelativeLayout) findViewById(R.id.rl_top);
-        tv_ensure = (TextView) findViewById(R.id.tv_ensure);
-        tv_cancel = (TextView) findViewById(R.id.tv_cancel);
-
-        //颜色
-        red_image = (ImageView) findViewById(R.id.red_image);
-        origin_image = (ImageView) findViewById(R.id.origin_image);
-        blue_image = (ImageView) findViewById(R.id.blue_image);
-        green_image = (ImageView) findViewById(R.id.green_image);
-        white_image = (ImageView) findViewById(R.id.white_image);
-        black_image = (ImageView) findViewById(R.id.black_image);
-
-        //
-        rl_bottom= (RelativeLayout) findViewById(R.id.rl_bottom);
-        //截屏view
-        cropImageView = (CropImageView) findViewById(R.id.cropImageView);
-//        cropImageView.setScaleType(CropImageView.ScaleType.FIT_CENTER);
-        //旋转
-        btn_back = (IconFontRadioButton) findViewById(R.id.btn_back);
-        //截屏取消
-        btn_cancel = (IconFontRadioButton) findViewById(R.id.btn_cancel);
-        //截屏完成
-        btn_ok = (IconFontRadioButton) findViewById(R.id.btn_ok);
-        //截屏撤销
-        tv_screen_back = (TextView) findViewById(R.id.tv_screen_back);
-        //截屏所有
-        rl_screen = (RelativeLayout) findViewById(R.id.rl_screen);
-
-        //截屏事件
-        btn_back.setOnClickListener(mScreenOnclickListener);
-        btn_cancel.setOnClickListener(mScreenOnclickListener);
-        btn_ok.setOnClickListener(mScreenOnclickListener);
-        tv_screen_back.setOnClickListener(mScreenOnclickListener);
-        rl_bottom.setOnClickListener(mScreenOnclickListener);
-
-
-        cropImageView.setOnCropImageCompleteListener(this);
-
-        //颜色事件
-        red_image.setOnClickListener(mColorOnclickListener);
-        origin_image.setOnClickListener(mColorOnclickListener);
-        green_image.setOnClickListener(mColorOnclickListener);
-        blue_image.setOnClickListener(mColorOnclickListener);
-        white_image.setOnClickListener(mColorOnclickListener);
-        black_image.setOnClickListener(mColorOnclickListener);
-
-        //顶部取消
-        rl_top.setOnClickListener(mMenuOnClickListener);
-        //菜单点击事件-防止绘制小点
-        ll_button_menu.setOnClickListener(mMenuOnClickListener);
-        rg_bottom_group.setOnClickListener(mMenuOnClickListener);
-        //删除
-        rd_delete.setOnClickListener(mMenuOnClickListener);
-
-        //确定取消事件
-        tv_ensure.setOnClickListener(mMenuOnClickListener);
-        tv_cancel.setOnClickListener(mMenuOnClickListener);
-
-        rd_text.setOnClickListener(mMenuOnClickListener);
-        rd_write.setOnClickListener(mMenuOnClickListener);
-        rd_mosaic.setOnClickListener(mMenuOnClickListener);
-        rd_screen.setOnClickListener(mMenuOnClickListener);
-        rd_back.setOnClickListener(mMenuOnClickListener);
-
-
         findViewById(R.id.btn_pen_hand).setOnClickListener(mOnClickListener);
         findViewById(R.id.btn_pen_copy).setOnClickListener(mOnClickListener);
         findViewById(R.id.btn_pen_eraser).setOnClickListener(mOnClickListener);
@@ -639,19 +556,15 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
                         && mGraffitiParams.mChangePanelVisibilityDelay > 0) {
                     switch (event.getAction() & MotionEvent.ACTION_MASK) {
                         case MotionEvent.ACTION_DOWN:
-//                         //触摸屏幕超过一定时间才判断为需要隐藏设置面板
-                            ll_button_menu.removeCallbacks(mHideDelayRunnable);
-                            ll_button_menu.removeCallbacks(mShowDelayRunnable);
-                            ll_button_menu.postDelayed(mHideDelayRunnable, mGraffitiParams.mChangePanelVisibilityDelay);
-
+                            mSettingsPanel.removeCallbacks(mHideDelayRunnable);
+                            mSettingsPanel.removeCallbacks(mShowDelayRunnable);
+                            mSettingsPanel.postDelayed(mHideDelayRunnable, mGraffitiParams.mChangePanelVisibilityDelay); //触摸屏幕超过一定时间才判断为需要隐藏设置面板
                             break;
                         case MotionEvent.ACTION_CANCEL:
                         case MotionEvent.ACTION_UP:
-                            //离开屏幕超过一定时间才判断为需要显示设置面板
-                            ll_button_menu.removeCallbacks(mHideDelayRunnable);
-                            ll_button_menu.removeCallbacks(mShowDelayRunnable);
-                            ll_button_menu.postDelayed(mShowDelayRunnable, mGraffitiParams.mChangePanelVisibilityDelay);
-
+                            mSettingsPanel.removeCallbacks(mHideDelayRunnable);
+                            mSettingsPanel.removeCallbacks(mShowDelayRunnable);
+                            mSettingsPanel.postDelayed(mShowDelayRunnable, mGraffitiParams.mChangePanelVisibilityDelay); //离开屏幕超过一定时间才判断为需要显示设置面板
                             break;
                     }
                 } else if (mBtnHidePanel.isSelected() && mGraffitiView.getAmplifierScale() > 0) {
@@ -741,22 +654,18 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
         });
 
         mViewShowAnimation = new AlphaAnimation(0, 1);
-        mViewShowAnimation.setDuration(200);
+        mViewShowAnimation.setDuration(500);
         mViewHideAnimation = new AlphaAnimation(1, 0);
-        mViewHideAnimation.setDuration(200);
+        mViewHideAnimation.setDuration(500);
         mHideDelayRunnable = new Runnable() {
             public void run() {
-//                hideView(mSettingsPanel);
-                hideView(ll_button_menu);
-                hideView(rl_top);
+                hideView(mSettingsPanel);
             }
 
         };
         mShowDelayRunnable = new Runnable() {
             public void run() {
-//                showView(mSettingsPanel);
-                showView(ll_button_menu);
-                showView(rl_top);
+                showView(mSettingsPanel);
             }
         };
 
@@ -781,294 +690,6 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
         return (float) Math.sqrt(x * x + y * y);
     }
 
-    /**
-     * 文字添加回调
-     */
-    @Override
-    public void setCommentText(Map<String, Object> map) {
-
-//        float x = (float) map.get(AppParmers.X_POSITIONX);
-//        float y = (float) map.get(AppParmers.Y_POSITION);
-
-
-        float x = screenWidth/2;
-        float y = screenHeight/2;
-
-
-
-        int color = (int) map.get(AppParmers.TEXT_COLOR);
-        String content = (String) map.get(AppParmers.TEXT_CONTENT);
-
-        Log.e("text-","text-start===x==="+x+"===y==="+y+"===content==="+content);
-        if (TextUtils.isEmpty(content)) {
-            return;
-        }
-        int oldColor = mGraffitiView.getColor().getColor();
-        setGraffitiViewColor(color);
-
-
-        if (currentTextGraffitiText == null) {
-//            mGraffitiView.addSelectableItem(new GraffitiText(mGraffitiView.getPen(), content, mGraffitiView.getPaintSize(), mGraffitiView.getColor().copy(),
-//                    0, mGraffitiView.getGraffitiRotateDegree(), x, y, mGraffitiView.getOriginalPivotX()/2, mGraffitiView.getOriginalPivotY()));
-
-            mGraffitiView.addSelectableItem(new GraffitiText(mGraffitiView.getPen(), content, mGraffitiView.getPaintSize(), mGraffitiView.getColor().copy(),
-                    0, mGraffitiView.getGraffitiRotateDegree(), x, y, mGraffitiView.getOriginalPivotX(), mGraffitiView.getOriginalPivotY()));
-
-
-        } else {
-            currentTextGraffitiText.setText(content);
-        }
-        mGraffitiView.invalidate();
-
-        //设置默认颜色
-        mGraffitiView.setColor(oldColor);
-    }
-
-    public void setGraffitiViewColor(int color) {
-        mGraffitiView.setColor(this.getResources().getColor(color));
-    }
-
-    @Override
-    public void onCropImageComplete(CropImageView view, CropImageView.CropResult result) {
-
-        if (result.getError() == null) {
-            Bitmap bitmap = result.getBitmap();
-            mGraffitiView.resetBitmap(bitmap);
-
-            rl_screen.setVisibility(View.GONE);
-            //设置为滑动模式
-            mIsMovingPic = true;
-
-        } else {
-            Toast.makeText(EditImageActivity.this, "图片截取失败: " + result.getError().getMessage(), Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-    private class ColorOnCLickListener implements View.OnClickListener {
-        private View mLastColoriew;
-
-        @Override
-        public void onClick(View v) {
-
-            if (v.getId() == R.id.red_image) {//颜色
-                setGraffitiViewColor(R.color.red);
-
-            } else if (v.getId() == R.id.origin_image) {
-                setGraffitiViewColor(R.color.orange);
-
-            } else if (v.getId() == R.id.green_image) {
-                setGraffitiViewColor(R.color.green);
-            } else if (v.getId() == R.id.blue_image) {
-                setGraffitiViewColor(R.color.blue);
-            } else if (v.getId() == R.id.white_image) {
-                setGraffitiViewColor(R.color.white);
-            } else if (v.getId() == R.id.black_image) {
-                setGraffitiViewColor(R.color.black);
-            }
-            if (mLastColoriew != null) {
-                mLastColoriew.setSelected(false);
-            }
-            v.setSelected(true);
-            mLastColoriew = v;
-        }
-    }
-
-    /**
-     * 截屏事件
-     */
-    private class ScreenClickListener implements View.OnClickListener {
-
-        @Override
-        public void onClick(View v) {
-
-            if (v.getId() == R.id.btn_back) {//旋转
-                cropImageView.rotateImage(90);
-            } else if (v.getId() == R.id.btn_cancel) {//取消
-                rl_screen.setVisibility(View.GONE);
-                //取消刚刚绘制的
-                mGraffitiView.undoText();
-
-            } else if (v.getId() == R.id.btn_ok) {//确定
-//                cropImageView.getCroppedImageAsync();
-                //设置为滑动模式
-                LogUtil.e("big_line-btn_ok===");
-                mIsMovingPic = true;
-
-                Bitmap cropped = cropImageView.getCroppedImage();
-
-                if (cropped!= null) {
-                    mGraffitiView.resetBitmap(cropped);
-
-                    rl_screen.setVisibility(View.GONE);
-
-                } else {
-                    Toast.makeText(EditImageActivity.this, "图片截取失败", Toast.LENGTH_LONG).show();
-                }
-
-            } else if (v.getId() == R.id.tv_screen_back) {//还原
-
-                cropImageView.setImageBitmap(mGraffitiView.getCurrentScreenBitmap());
-            }else if(v.getId()==R.id.rl_bottom){
-                LogUtil.e("big_line-rl_bottom===");
-            }
-
-        }
-    }
-
-    private class MenuOnClickListener implements View.OnClickListener {
-
-        private View lastMenuView;
-        private boolean notNeedChangeState;
-
-        @Override
-        public void onClick(View v) {
-
-            boolean isselfe = lastMenuView != null && lastMenuView.getId() == v.getId();
-
-            //自定义添加的
-            if (v.getId() == R.id.rd_write) {//手绘
-                //设置画笔大小
-                mGraffitiView.setPaintSize(drawPaintSize);
-                //可以设置颜色
-                mPaintSizeBar.setProgress((int) (mGraffitiView.getPaintSize()));
-                mShapeModeContainer.setVisibility(View.VISIBLE);
-                mGraffitiView.setPen(GraffitiView.Pen.HAND);
-
-                mGraffitiView.setShape(GraffitiView.Shape.HAND_WRITE);
-
-                setButtonMenuShow(v, isselfe, true, mGraffitiView.getPen());
-
-            } else if (v.getId() == R.id.rd_text) {//文字
-
-                //                mPaintSizeBar.setProgress(textPaintSize);
-
-                if (mGraffitiView.isSelectedItem()) {
-                    mGraffitiView.setSelectedItemSize(textPaintSize);
-                } else {
-                    mGraffitiView.setPaintSize(textPaintSize);
-                }
-                mShapeModeContainer.setVisibility(View.GONE);
-                mGraffitiView.setPen(GraffitiView.Pen.TEXT);
-
-
-                //默认在开头中间
-//                createGraffitiText(null, screenWidth / 2, screenHeight / 2);
-                createGraffitiText(null, -1, -1);
-
-                setButtonMenuShow(v, isselfe, true, mGraffitiView.getPen());
-
-
-            } else if (v.getId() == R.id.rd_mosaic) {//马赛克
-                mGraffitiView.setPen(GraffitiView.Pen.MOSAIC);
-                mGraffitiView.setPaintSize(mosicaPaintSize);
-                setButtonMenuShow(v, isselfe, true, mGraffitiView.getPen());
-//                mGraffitiView.setMosaicResource(mBitmap);
-
-
-            } else if (v.getId() == R.id.rd_screen) {//截屏
-                mGraffitiView.setPen(GraffitiView.Pen.SCREEN);
-                setButtonMenuShow(v, isselfe, true, mGraffitiView.getPen());
-
-                rl_screen.setVisibility(View.VISIBLE);
-                //设置截屏图片
-
-                mGraffitiView.save(new GraffitiListener() {
-                    @Override
-                    public void onSaved(Bitmap bitmap, Bitmap bitmapEraser) {
-                        cropImageView.setImageBitmap(bitmap);
-                    }
-
-                    @Override
-                    public void onError(int i, String msg) {
-
-                    }
-
-                    @Override
-                    public void onReady() {
-
-                    }
-
-                    @Override
-                    public void onSelectedItem(GraffitiSelectableItem selectableItem, boolean selected) {
-
-                    }
-
-                    @Override
-                    public void onCreateSelectableItem(GraffitiView.Pen pen, float x, float y) {
-
-                    }
-                });
-
-                //设置为滑动模式
-                mIsMovingPic = true;
-
-            } else if (v.getId() == R.id.rd_back) {//撤销
-                mGraffitiView.undo();
-            } else if (v.getId() == R.id.tv_cancel) {//取消
-                if (!mGraffitiView.isModified()) {
-                    finish();
-                    return;
-                }
-                if (!(GraffitiParams.getDialogInterceptor() != null
-                        && GraffitiParams.getDialogInterceptor().onShow(EditImageActivity.this, mGraffitiView, GraffitiParams.DialogType.SAVE))) {
-                    DialogController.showEnterCancelDialog(EditImageActivity.this, getString(R.string.graffiti_saving_picture), null, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mGraffitiView.save();
-                        }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            finish();
-                        }
-                    });
-                }
-
-            } else if (v.getId() == R.id.tv_ensure) {//确定
-                mGraffitiView.save();
-            } else if (v.getId() == R.id.rd_delete) {//删除
-                mGraffitiView.removeSelectedItem();
-                //还是设置文字
-                //                mPaintSizeBar.setProgress(textPaintSize);
-
-                if (mGraffitiView.isSelectedItem()) {
-                    mGraffitiView.setSelectedItemSize(textPaintSize);
-                } else {
-                    mGraffitiView.setPaintSize(textPaintSize);
-                }
-                mShapeModeContainer.setVisibility(View.GONE);
-                mGraffitiView.setPen(GraffitiView.Pen.TEXT);
-
-                setButtonMenuShow(v, isselfe, true, mGraffitiView.getPen());
-
-            } else if(v.getId()==R.id.rl_top){//取消，一栏
-                //不做处理
-                notNeedChangeState = true;
-            }else if (v.getId() == R.id.ll_button_menu) {//菜单栏点击事件
-                LogUtil.e("big_line-ll_button_menu===");
-                //不做处理
-                notNeedChangeState = true;
-            } else if (v.getId() == R.id.rg_bottom_group) {//radiogroup
-                //不做处理
-                notNeedChangeState = true;
-            }
-
-            //防止外部view北选中状态,影响内部view
-            if (!notNeedChangeState) {
-
-                if (lastMenuView != null) {
-                    lastMenuView.setSelected(false);
-                }
-//                v.setSelected(true);
-                lastMenuView = v;
-
-
-            }
-            notNeedChangeState = false;
-        }
-    }
-
     private class GraffitiOnClickListener implements View.OnClickListener {
 
         private View mLastPenView, mLastShapeView;
@@ -1077,7 +698,6 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
         @Override
         public void onClick(View v) {
             mDone = false;
-
             if (v.getId() == R.id.btn_pen_hand) {
                 mPaintSizeBar.setProgress((int) (mGraffitiView.getPaintSize() + 0.5f));
                 mShapeModeContainer.setVisibility(View.VISIBLE);
@@ -1102,20 +722,19 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
                 mGraffitiView.setPen(GraffitiView.Pen.BITMAP);
                 mDone = true;
             }
-            //如果done结束处理
             if (mDone) {
                 if (mLastPenView != null) {
                     mLastPenView.setSelected(false);
-
                 }
-
                 v.setSelected(true);
                 mLastPenView = v;
                 return;
-            } else if (v.getId() == R.id.btn_clear) {
+            }
+
+            if (v.getId() == R.id.btn_clear) {
                 if (!(GraffitiParams.getDialogInterceptor() != null
-                        && GraffitiParams.getDialogInterceptor().onShow(EditImageActivity.this, mGraffitiView, GraffitiParams.DialogType.CLEAR_ALL))) {
-                    DialogController.showEnterCancelDialog(EditImageActivity.this,
+                        && GraffitiParams.getDialogInterceptor().onShow(EditImageCopy.this, mGraffitiView, GraffitiParams.DialogType.CLEAR_ALL))) {
+                    DialogController.showEnterCancelDialog(EditImageCopy.this,
                             getString(R.string.graffiti_clear_screen), getString(R.string.graffiti_cant_undo_after_clearing),
                             new View.OnClickListener() {
                                 @Override
@@ -1131,8 +750,8 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
                 mDone = true;
             } else if (v.getId() == R.id.btn_set_color) {
                 if (!(GraffitiParams.getDialogInterceptor() != null
-                        && GraffitiParams.getDialogInterceptor().onShow(EditImageActivity.this, mGraffitiView, GraffitiParams.DialogType.COLOR_PICKER))) {
-                    new ColorPickerDialog(EditImageActivity.this, mGraffitiView.getGraffitiColor().getColor(), "画笔颜色",
+                        && GraffitiParams.getDialogInterceptor().onShow(EditImageCopy.this, mGraffitiView, GraffitiParams.DialogType.COLOR_PICKER))) {
+                    new ColorPickerDialog(EditImageCopy.this, mGraffitiView.getGraffitiColor().getColor(), "画笔颜色",
                             new ColorPickerDialog.OnColorChangedListener() {
                                 public void colorChanged(int color) {
                                     mBtnColor.setBackgroundColor(color);
@@ -1179,8 +798,8 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
                     return;
                 }
                 if (!(GraffitiParams.getDialogInterceptor() != null
-                        && GraffitiParams.getDialogInterceptor().onShow(EditImageActivity.this, mGraffitiView, GraffitiParams.DialogType.SAVE))) {
-                    DialogController.showEnterCancelDialog(EditImageActivity.this, getString(R.string.graffiti_saving_picture), null, new View.OnClickListener() {
+                        && GraffitiParams.getDialogInterceptor().onShow(EditImageCopy.this, mGraffitiView, GraffitiParams.DialogType.SAVE))) {
+                    DialogController.showEnterCancelDialog(EditImageCopy.this, getString(R.string.graffiti_saving_picture), null, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             mGraffitiView.save();
@@ -1246,10 +865,8 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
             if (mLastShapeView != null) {
                 mLastShapeView.setSelected(false);
             }
-
             v.setSelected(true);
             mLastShapeView = v;
-
         }
     }
 
@@ -1386,143 +1003,6 @@ public class EditImageActivity extends Activity implements DialogFragmentDataCal
             mGraffitiView.setAmplifierScale(mGraffitiParams.mAmplifierScale);
         } else if ((view == mSettingsPanel && mGraffitiView.getAmplifierScale() > 0)) {
             mGraffitiView.setAmplifierScale(-1);
-        }
-    }
-
-    /**
-     * 设置底部显示
-     */
-    public void setButtonMenuShow(View view, boolean isSelfe, boolean show, GraffitiView.Pen pen) {
-
-
-        if (pen == GraffitiView.Pen.HAND) {//手绘
-
-            //删除按钮
-            rd_delete.setVisibility(View.GONE);
-            //显示撤销
-            ll_back.setVisibility(View.VISIBLE);
-            //设置撤销match
-            ViewGroup.LayoutParams layoutParams = ll_back.getLayoutParams();
-            layoutParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-            ll_back.setLayoutParams(layoutParams);
-            //颜色地板显示
-            rg_bottom.setVisibility(View.VISIBLE);
-
-            afterClick(view, isSelfe, show);
-
-            viewClickShow(pen);
-        } else if (pen == GraffitiView.Pen.MOSAIC) {//马赛克
-
-            //删除按钮
-            rd_delete.setVisibility(View.GONE);
-            //显示撤销
-            ll_back.setVisibility(View.VISIBLE);
-            //设置撤销match
-            ViewGroup.LayoutParams layoutParams = ll_back.getLayoutParams();
-            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            ll_back.setLayoutParams(layoutParams);
-
-            //颜色地板显示
-            rg_bottom.setVisibility(View.GONE);
-            //线
-            tv_color_line.setVisibility(View.GONE);
-
-            afterClick(view, isSelfe, show);
-            viewClickShow(pen);
-        } else if (pen == GraffitiView.Pen.TEXT) {//文本
-
-            //删除按钮
-            boolean textShow = mGraffitiView.getSelectedItem() != null;
-            rd_delete.setVisibility(textShow ? View.VISIBLE : View.GONE);
-            //显示撤销
-            ll_back.setVisibility(View.GONE);
-            //颜色地板显示
-            rg_bottom.setVisibility(View.GONE);
-
-            afterClick(view, isSelfe, show);
-
-//            ll_button_color.setVisibility(View.GONE);
-
-            viewClickShow(pen);
-        } else if (pen == GraffitiView.Pen.SCREEN) {//截屏
-
-            ll_button_color.setVisibility(View.GONE);
-            viewClickShow(pen);
-        }
-
-
-        //颜色菜单
-//        ll_button_color= (LinearLayout) findViewById(R.id.ll_button_color);
-        //撤销按钮
-//        ll_back= (LinearLayout) findViewById(R.id.ll_back);
-        //颜色按钮集合
-//        rg_bottom= (LinearLayout) findViewById(R.id.rg_bottom);
-        //颜色和撤销之间的线
-//        tv_color_line= (TextView) findViewById(R.id.tv_color_line);
-    }
-
-    /**
-     * 点击之后的设置
-     */
-    public void afterClick(View view, boolean isSelfe, boolean show) {
-        boolean oldLLAtate=ll_button_color.getVisibility()==View.VISIBLE;
-        if (isSelfe) {
-            ll_button_color.setVisibility(oldLLAtate  ? View.GONE : View.VISIBLE);
-        } else {
-            ll_button_color.setVisibility(show ? View.VISIBLE : View.GONE);
-        }
-        boolean newLLAtate=ll_button_color.getVisibility()==View.VISIBLE;
-        mIsMovingPic = !newLLAtate;
-
-        try {
-            LogUtil.e("state-viewState===" + newLLAtate);
-            ((IconFontRadioButton) view).setChecked(newLLAtate);
-            view.setSelected(newLLAtate);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 各个按钮点击事件
-     */
-    public void viewClickShow(GraffitiView.Pen pen) {
-
-        boolean viewState = ll_button_color.getVisibility() == View.VISIBLE;
-
-        if (pen == GraffitiView.Pen.HAND) {//手绘
-            rd_write.setTextColor(viewState ? this.getResources().getColor(R.color.selected_color) :
-                    this.getResources().getColor(R.color.white));
-            rd_text.setTextColor(this.getResources().getColor(R.color.white));
-            rd_mosaic.setTextColor(this.getResources().getColor(R.color.white));
-            rd_screen.setTextColor(this.getResources().getColor(R.color.white));
-        } else if (pen == GraffitiView.Pen.TEXT) {//文字
-            rd_write.setTextColor(this.getResources().getColor(R.color.white));
-            rd_text.setTextColor(viewState ? this.getResources().getColor(R.color.selected_color) :
-                    this.getResources().getColor(R.color.white));
-            rd_mosaic.setTextColor(this.getResources().getColor(R.color.white));
-            rd_screen.setTextColor(this.getResources().getColor(R.color.white));
-        } else if (pen == GraffitiView.Pen.MOSAIC) {//马赛克
-            rd_write.setTextColor(this.getResources().getColor(R.color.white));
-            rd_text.setTextColor(this.getResources().getColor(R.color.white));
-            rd_mosaic.setTextColor(viewState ? this.getResources().getColor(R.color.selected_color) :
-                    this.getResources().getColor(R.color.white));
-            rd_screen.setTextColor(this.getResources().getColor(R.color.white));
-        } else if (pen == GraffitiView.Pen.SCREEN) {//截屏
-            rd_write.setTextColor(this.getResources().getColor(R.color.white));
-            rd_text.setTextColor(this.getResources().getColor(R.color.white));
-            rd_mosaic.setTextColor(this.getResources().getColor(R.color.white));
-            rd_screen.setTextColor(viewState ? this.getResources().getColor(R.color.selected_color) :
-                    this.getResources().getColor(R.color.white));
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (cropImageView != null) {
-//            cropImageView.setOnSetImageUriCompleteListener(null);
-            cropImageView.setOnCropImageCompleteListener(null);
         }
     }
 

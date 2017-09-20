@@ -1,5 +1,6 @@
 package cn.hzw.graffiti.edit_image;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -59,12 +60,12 @@ public class AddTextDialogFragment extends DialogFragment implements View.OnClic
     }
 
     @Override
-    public void onAttach(Context context) {
-        if (!(getActivity() instanceof DialogFragmentDataCallback)) {
+    public void onAttach(Activity context) {
+        if (!(context instanceof DialogFragmentDataCallback)) {
             throw new IllegalStateException("DialogFragment 所在的 activity 必须实现 DialogFragmentDataCallback 接口");
         }
         super.onAttach(context);
-        dataCallback = (DialogFragmentDataCallback) getActivity();
+        dataCallback = (DialogFragmentDataCallback) context;
     }
 
     @Override
@@ -218,7 +219,7 @@ public class AddTextDialogFragment extends DialogFragment implements View.OnClic
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.tv_ensure){//确定
-            if (dataCallback != null) {
+            if (dataCallback!= null) {
                 if (map == null) {
                     map = new HashMap<>();
                 }
@@ -228,6 +229,8 @@ public class AddTextDialogFragment extends DialogFragment implements View.OnClic
                 Log.e("text-","-start===x==="+commentEditText.getText().toString());
 
                 dataCallback.setCommentText(map);
+            }else{
+                Log.e("text-","-start-为空===x==="+commentEditText.getText().toString());
             }
             if (mDialog != null) {
                 mDialog.dismiss();
